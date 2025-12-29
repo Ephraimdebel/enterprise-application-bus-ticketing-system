@@ -1,0 +1,15 @@
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/bin/Debug/net10.0/Passenger.Application.deps.json
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/bin/Debug/net10.0/Passenger.Application.dll
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/bin/Debug/net10.0/Passenger.Application.pdb
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/bin/Debug/net10.0/Passenger.Domain.dll
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/bin/Debug/net10.0/Passenger.Domain.pdb
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenger.Application.csproj.AssemblyReference.cache
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenger.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenger.Application.AssemblyInfoInputs.cache
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenger.Application.AssemblyInfo.cs
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenger.Application.csproj.CoreCompileInputs.cache
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenge.B1754A6D.Up2Date
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenger.Application.dll
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/refint/Passenger.Application.dll
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/Passenger.Application.pdb
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/obj/Debug/net10.0/ref/Passenger.Application.dll

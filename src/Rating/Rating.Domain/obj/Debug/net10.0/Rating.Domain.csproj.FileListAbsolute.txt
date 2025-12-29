@@ -1,0 +1,11 @@
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/bin/Debug/net10.0/Rating.Domain.deps.json
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/bin/Debug/net10.0/Rating.Domain.dll
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/bin/Debug/net10.0/Rating.Domain.pdb
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/Rating.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/Rating.Domain.AssemblyInfoInputs.cache
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/Rating.Domain.AssemblyInfo.cs
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/Rating.Domain.csproj.CoreCompileInputs.cache
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/Rating.Domain.dll
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/refint/Rating.Domain.dll
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/Rating.Domain.pdb
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Rating/Rating.Domain/obj/Debug/net10.0/ref/Rating.Domain.dll
