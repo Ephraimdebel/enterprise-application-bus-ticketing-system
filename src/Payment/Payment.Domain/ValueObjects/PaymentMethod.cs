@@ -2,7 +2,7 @@ namespace Payment.Domain.ValueObjects;
 
 public enum PaymentMethod
 {
-    CreditCard,
+    Card,
     MobileMoney,
-    BankTransfer
+    Cash
 }
