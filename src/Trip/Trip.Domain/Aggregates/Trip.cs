@@ -1,11 +1,14 @@
 using Trip.Domain.Entities;
 using Trip.Domain.ValueObjects;
+using Trip.Domain.Events;
+
 
 namespace Trip.Domain.Aggregates;
 
 public class Trip
 {
     private readonly List<Seat> _seats = new();
+    private readonly List<IDomainEvent> _domainEvents = new();
 
     public Guid TripId { get; }
     public TravelDateTime DepartureTime { get; private set; }
@@ -16,6 +19,8 @@ public class Trip
     public Bus Bus { get; }
 
     public IReadOnlyCollection<Seat> Seats => _seats.AsReadOnly();
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
 
     public Trip(
         Guid tripId,
@@ -57,7 +62,10 @@ public class Trip
             throw new InvalidOperationException("Seat does not exist.");
 
         seat.Reserve();
+
+        _domainEvents.Add(new TripSeatReserved(TripId, seatNumber));
     }
+
 
     public void ReleaseSeat(SeatNumber seatNumber)
     {
@@ -67,7 +75,10 @@ public class Trip
             throw new InvalidOperationException("Seat does not exist.");
 
         seat.Release();
+
+        _domainEvents.Add(new TripSeatReleased(TripId, seatNumber));
     }
+
 
     public void Cancel()
     {
