@@ -28,6 +28,12 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Enable Swagger middleware
+if (app.Environment.IsDevelopment() || true) // for demo always true
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 //  Swagger UI
 app.UseSwagger();
 app.UseSwaggerUI();

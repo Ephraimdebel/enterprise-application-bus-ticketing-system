@@ -6,7 +6,7 @@ namespace Payment.Infrastructure.Persistence
 {
     public class PaymentDbContext : DbContext
     {
-        public DbSet<PaymentEntity> Payments { get; set; }
+        public DbSet<PaymentEntity> Payments { get; set; } = null!;
 
         public PaymentDbContext(DbContextOptions<PaymentDbContext> options)
             : base(options)

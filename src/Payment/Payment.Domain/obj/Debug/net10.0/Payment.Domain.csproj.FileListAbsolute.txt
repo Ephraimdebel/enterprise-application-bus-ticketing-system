@@ -5,6 +5,7 @@
 /home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Payment/Payment.Domain/obj/Debug/net10.0/Payment.Domain.AssemblyInfoInputs.cache
 /home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Payment/Payment.Domain/obj/Debug/net10.0/Payment.Domain.AssemblyInfo.cs
 /home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Payment/Payment.Domain/obj/Debug/net10.0/Payment.Domain.csproj.CoreCompileInputs.cache
+/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Payment/Payment.Domain/obj/Debug/net10.0/Payment.Domain.sourcelink.json
 /home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Payment/Payment.Domain/obj/Debug/net10.0/Payment.Domain.dll
 /home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Payment/Payment.Domain/obj/Debug/net10.0/refint/Payment.Domain.dll
 /home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Payment/Payment.Domain/obj/Debug/net10.0/Payment.Domain.pdb

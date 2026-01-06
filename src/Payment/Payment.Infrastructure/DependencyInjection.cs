@@ -13,7 +13,7 @@ namespace Payment.Infrastructure
             string connectionString)
         {
             services.AddDbContext<PaymentDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseNpgsql(connectionString));
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
 
