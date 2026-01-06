@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Lz8N2s5yVtY=",
+  "dgSpecHash": "0e/uZGRDkZI=",
   "success": true,
-  "projectFilePath": "/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Application/Passenger.Application.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alphicho\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",
+    "C:\\Users\\Alphicho\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
+    "C:\\Users\\Alphicho\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.1.0\\mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
+    "C:\\Users\\Alphicho\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

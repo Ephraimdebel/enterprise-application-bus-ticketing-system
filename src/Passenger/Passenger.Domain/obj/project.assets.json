@@ -8,19 +8,19 @@
     "net10.0": []
   },
   "packageFolders": {
-    "/home/ephraim/.nuget/packages/": {}
+    "C:\\Users\\Alphicho\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Domain/Passenger.Domain.csproj",
+      "projectUniqueName": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj",
       "projectName": "Passenger.Domain",
-      "projectPath": "/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Domain/Passenger.Domain.csproj",
-      "packagesPath": "/home/ephraim/.nuget/packages/",
-      "outputPath": "/home/ephraim/Desktop/Projects/class projects/EAD/enterprise-bus-ticketing-system/src/Passenger/Passenger.Domain/obj/",
+      "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj",
+      "packagesPath": "C:\\Users\\Alphicho\\.nuget\\packages\\",
+      "outputPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/ephraim/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Alphicho\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -65,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/ephraim/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
