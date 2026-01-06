@@ -1,7 +1,7 @@
 using Trip.Domain.Entities;
 using Trip.Domain.ValueObjects;
 using Trip.Domain.Events;
-
+using Trip.Domain.Enums; 
 
 namespace Trip.Domain.Aggregates;
 
@@ -13,7 +13,7 @@ public class Trip
     public Guid TripId { get; }
     public TravelDateTime DepartureTime { get; private set; }
     public TravelDateTime ArrivalTime { get; private set; }
-    public string Status { get; private set; }
+    public TripStatus Status { get; private set; } 
 
     public Route Route { get; }
     public Bus Bus { get; }
@@ -37,7 +37,7 @@ public class Trip
         ArrivalTime = arrivalTime;
         Route = route;
         Bus = bus;
-        Status = "Scheduled";
+        Status = TripStatus.Scheduled;
 
         InitializeSeats(bus.SeatCapacity);
     }
@@ -53,7 +53,7 @@ public class Trip
 
     public void ReserveSeat(SeatNumber seatNumber)
     {
-        if (Status != "Scheduled")
+        if (Status != TripStatus.Scheduled)
             throw new InvalidOperationException("Cannot reserve seats for a non-active trip.");
 
         var seat = _seats.SingleOrDefault(s => s.SeatNumber.Equals(seatNumber));
@@ -65,7 +65,6 @@ public class Trip
 
         _domainEvents.Add(new TripSeatReserved(TripId, seatNumber));
     }
-
 
     public void ReleaseSeat(SeatNumber seatNumber)
     {
@@ -79,9 +78,21 @@ public class Trip
         _domainEvents.Add(new TripSeatReleased(TripId, seatNumber));
     }
 
-
     public void Cancel()
     {
-        Status = "Cancelled";
+        if (Status == TripStatus.Cancelled)
+            throw new InvalidOperationException("Trip is already cancelled.");
+
+        Status = TripStatus.Cancelled;
+
+        // release all reserved seats automatically when trip is cancelled
+        foreach (var seat in _seats.Where(s => s.IsReserved))
+        {
+            seat.Release();
+            _domainEvents.Add(new TripSeatReleased(TripId, seat.SeatNumber));
+        }
+
+        _domainEvents.Add(new TripCancelled(TripId));
     }
 }
+
