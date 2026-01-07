@@ -35,8 +35,12 @@ public class CreatePaymentHandler : IRequestHandler<CreatePaymentCommand, Paymen
         await _repository.AddAsync(payment);
         await _repository.SaveChangesAsync();
 
+        // similate 
+        
+        payment.MarkAsSuccess(); 
+
         // 4️⃣ Publish event if payment is completed
-        if (payment.Status.ToString() == "Completed") // or payment.Status == PaymentStatus.Completed if enum
+        if (payment.Status.ToString() == "Success") // or payment.Status == PaymentStatus.Completed if enum
         {
             var evt = new PaymentCompletedEvent
             {

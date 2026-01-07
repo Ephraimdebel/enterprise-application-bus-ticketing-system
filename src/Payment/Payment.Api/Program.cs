@@ -53,6 +53,8 @@ if (app.Environment.IsDevelopment() || true) // for demo always true
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
 //  Swagger UI
 app.UseSwagger();
 app.UseSwaggerUI();

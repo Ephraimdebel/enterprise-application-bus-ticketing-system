@@ -1,6 +1,10 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Notification.Application;
+using Notification.Domain;
+using Notification.Infrastructure;
 using Notification.Infrastructure.Messaging;
+using Notification.Infrastructure.Persistence;
 using RabbitMQ.Client; // Make sure this points to your Application project
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +14,17 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Notification.Application.Class1).Assembly)
 );
 
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+
+builder.Services.AddDbContext<NotificationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("NotificationDb")));
+
+
 
 builder.Services.AddSingleton<IConnection>(static sp =>
 {
