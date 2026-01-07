@@ -4,9 +4,11 @@ namespace Trip.Domain.Entities;
 
 public class Seat
 {
-    public Guid SeatId { get; }
-    public SeatNumber SeatNumber { get; }
+    public Guid SeatId { get; private set; }
+    public SeatNumber SeatNumber { get; private set; }
     public bool IsAvailable { get; private set; }
+    public Guid TripId { get; private set; }
+    private Seat() { }
 
     public Seat(Guid seatId, SeatNumber seatNumber)
     {
@@ -31,3 +33,4 @@ public class Seat
         IsAvailable = true;
     }
 }
+

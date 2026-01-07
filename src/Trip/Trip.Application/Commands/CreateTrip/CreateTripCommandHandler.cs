@@ -1,12 +1,11 @@
 using MediatR;
 using Trip.Application.Interfaces;
-using Trip.Domain.Aggregates;
-using Trip.Domain.Entities;
+using TripAggregates = Trip.Domain.Aggregates.Trip;
 
 namespace Trip.Application.Commands.CreateTrip;
 
 public sealed class CreateTripCommandHandler
-    : IRequestHandler<CreateTripCommand>
+    : IRequestHandler<CreateTripCommand, Unit>
 {
     private readonly ITripRepository _tripRepository;
 
@@ -15,25 +14,22 @@ public sealed class CreateTripCommandHandler
         _tripRepository = tripRepository;
     }
 
-    public async Task Handle(
+    public async Task<Unit> Handle(
         CreateTripCommand request,
         CancellationToken cancellationToken)
     {
-
-        // Bus and Route will be resolved in Infrastructure
-        // or will be passed as references later via events
-
-        var bus = new Bus(request.BusId, "TEMP", "TEMP", 40, "Standard");
-        var route = new Route(request.RouteId, "TEMP", "TEMP", 0, TimeSpan.Zero);
-
-        var trip = new Trip(
+        var trip = new TripAggregates(
             request.TripId,
             request.DepartureTime,
             request.ArrivalTime,
-            route,
-            bus
+            request.BusId,
+            request.RouteId,
+            request.SeatCapacity, // placeholder
+            request.Price 
         );
 
         await _tripRepository.AddAsync(trip, cancellationToken);
+
+        return Unit.Value;
     }
 }

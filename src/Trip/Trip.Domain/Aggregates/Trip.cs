@@ -1,7 +1,7 @@
-using Trip.Domain.Entities;
 using Trip.Domain.ValueObjects;
 using Trip.Domain.Events;
 using Trip.Domain.Enums;
+using Trip.Domain.Entities;
 
 namespace Trip.Domain.Aggregates;
 
@@ -10,36 +10,42 @@ public class Trip
     private readonly List<Seat> _seats = new();
     private readonly List<IDomainEvent> _domainEvents = new();
 
-    public Guid TripId { get; }
+    public Guid TripId { get; private set; }
+    public TripPrice Price { get; private set; }
     public TravelDateTime DepartureTime { get; private set; }
     public TravelDateTime ArrivalTime { get; private set; }
+
     public TripStatus Status { get; private set; }
 
-    public Route Route { get; }
-    public Bus Bus { get; }
+    public Guid BusId { get; private set; }
+    public Guid RouteId { get; private set; }
 
     public IReadOnlyCollection<Seat> Seats => _seats.AsReadOnly();
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
+    private Trip() { }
 
     public Trip(
         Guid tripId,
         TravelDateTime departureTime,
         TravelDateTime arrivalTime,
-        Route route,
-        Bus bus)
+        Guid busId,
+        Guid routeId,
+        int seatCapacity,
+        TripPrice price)
     {
-        if (arrivalTime <= departureTime)
+        if (!arrivalTime.IsAfter(departureTime))
             throw new ArgumentException("Arrival time must be after departure time.");
 
         TripId = tripId;
         DepartureTime = departureTime;
         ArrivalTime = arrivalTime;
-        Route = route;
-        Bus = bus;
+        BusId = busId;
+        RouteId = routeId;
         Status = TripStatus.Scheduled;
 
-        InitializeSeats(bus.SeatCapacity);
+        Price = price;
+        InitializeSeats(seatCapacity);
     }
 
     private void InitializeSeats(int seatCapacity)
@@ -56,13 +62,10 @@ public class Trip
         if (Status != TripStatus.Scheduled)
             throw new InvalidOperationException("Cannot reserve seats for a non-active trip.");
 
-        var seat = _seats.SingleOrDefault(s => s.SeatNumber.Equals(seatNumber));
-
-        if (seat is null)
-            throw new InvalidOperationException("Seat does not exist.");
+        var seat = _seats.SingleOrDefault(s => s.SeatNumber.Equals(seatNumber))
+            ?? throw new InvalidOperationException("Seat does not exist.");
 
         seat.Reserve();
-
         _domainEvents.Add(new TripSeatReserved(TripId, seatNumber));
     }
 
@@ -71,13 +74,10 @@ public class Trip
         if (Status == TripStatus.Cancelled)
             throw new InvalidOperationException("Cannot release seats for a cancelled trip.");
 
-        var seat = _seats.SingleOrDefault(s => s.SeatNumber.Equals(seatNumber));
-
-        if (seat is null)
-            throw new InvalidOperationException("Seat does not exist.");
+        var seat = _seats.SingleOrDefault(s => s.SeatNumber.Equals(seatNumber))
+            ?? throw new InvalidOperationException("Seat does not exist.");
 
         seat.Release();
-
         _domainEvents.Add(new TripSeatReleased(TripId, seatNumber));
     }
 
@@ -88,7 +88,6 @@ public class Trip
 
         Status = TripStatus.Cancelled;
 
-        // release all reserved seats automatically when trip is cancelled
         foreach (var seat in _seats.Where(s => !s.IsAvailable))
         {
             seat.Release();
@@ -97,5 +96,18 @@ public class Trip
 
         _domainEvents.Add(new TripCancelled(TripId));
     }
+
+    public void UpdateSchedule(TravelDateTime newDepartureTime, TravelDateTime newArrivalTime, TripPrice newPrice)
+    {
+        if (!newArrivalTime.IsAfter(newDepartureTime))
+            throw new ArgumentException("Arrival time must be after departure time.");
+
+        DepartureTime = newDepartureTime;
+        ArrivalTime = newArrivalTime;
+        Price = newPrice;
+
+        _domainEvents.Add(new TripScheduleUpdated(TripId, newDepartureTime, newArrivalTime));
+    }
 }
+
 

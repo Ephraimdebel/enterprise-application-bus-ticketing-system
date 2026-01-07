@@ -30,7 +30,7 @@ public sealed class GetTripByIdQueryHandler
         return new TripDto
         {
             TripId = trip.TripId,
-            Status = trip.Status,
+            Status = trip.Status.ToString(),
 
             DepartureDate = trip.DepartureTime.Date,
             DepartureTime = trip.DepartureTime.Time,
@@ -38,11 +38,14 @@ public sealed class GetTripByIdQueryHandler
             ArrivalDate = trip.ArrivalTime.Date,
             ArrivalTime = trip.ArrivalTime.Time,
 
-            Origin = trip.Route.Origin,
-            Destination = trip.Route.Destination,
+
+            Origin = $"RouteId: {trip.RouteId}", // Placeholders for now
+            Destination = $"BusId: {trip.BusId}",
 
             TotalSeats = totalSeats,
-            AvailableSeats = availableSeats
+            AvailableSeats = availableSeats,
+
+            Price = trip.Price.Amount
         };
     }
 }

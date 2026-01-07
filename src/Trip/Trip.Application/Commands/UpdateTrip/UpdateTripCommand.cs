@@ -6,5 +6,6 @@ namespace Trip.Application.Commands.UpdateTrip;
 public sealed record UpdateTripCommand(
     Guid TripId,
     TravelDateTime NewDepartureTime,
-    TravelDateTime NewArrivalTime
+    TravelDateTime NewArrivalTime,
+    TripPrice NewPrice
 ) : IRequest;

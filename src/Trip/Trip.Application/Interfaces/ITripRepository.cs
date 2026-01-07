@@ -1,10 +1,10 @@
-using Trip.Domain.Aggregates;
+using TripAggregate = Trip.Domain.Aggregates.Trip;
 
 namespace Trip.Application.Interfaces;
 
 public interface ITripRepository
 {
-    Task<Trip?> GetByIdAsync(Guid tripId, CancellationToken cancellationToken);
-    Task AddAsync(Trip trip, CancellationToken cancellationToken);
-    Task SaveAsync(Trip trip, CancellationToken cancellationToken);
+    Task<TripAggregate?> GetByIdAsync(Guid tripId, CancellationToken cancellationToken);
+    Task AddAsync(TripAggregate trip, CancellationToken cancellationToken);
+    Task SaveAsync(TripAggregate trip, CancellationToken cancellationToken);
 }

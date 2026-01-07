@@ -20,6 +20,19 @@ public sealed class TravelDateTime : IEquatable<TravelDateTime>
     public override bool Equals(object? obj)
         => Equals(obj as TravelDateTime);
 
+    public bool IsAfter(TravelDateTime other)
+    {
+        if (other is null)
+            throw new ArgumentNullException(nameof(other));
+
+        if (Date > other.Date) return true;
+        if (Date < other.Date) return false;
+
+        return Time > other.Time;
+    }
+
+
     public override int GetHashCode()
         => HashCode.Combine(Date, Time);
+
 }

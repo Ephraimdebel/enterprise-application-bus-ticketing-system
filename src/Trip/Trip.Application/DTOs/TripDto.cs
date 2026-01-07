@@ -16,4 +16,5 @@ public sealed class TripDto
 
     public int TotalSeats { get; init; }
     public int AvailableSeats { get; init; }
+    public decimal Price { get; init; }
 }
