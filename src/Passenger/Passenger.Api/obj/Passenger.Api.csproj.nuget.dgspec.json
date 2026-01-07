@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj": {}
+    "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj": {}
   },
   "projects": {
-    "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj": {
+    "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj",
+        "projectUniqueName": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj",
         "projectName": "Passenger.Api",
-        "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj",
+        "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\Passenger.Api.csproj",
         "packagesPath": "C:\\Users\\Alphicho\\.nuget\\packages\\",
-        "outputPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\obj\\",
+        "outputPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alphicho\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,11 +26,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj": {
-                "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj"
+              "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj": {
+                "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj"
               },
-              "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj": {
-                "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj"
+              "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj": {
+                "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj"
               }
             }
           }
@@ -51,6 +51,10 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[10.0.1, )"
@@ -505,14 +509,14 @@
         }
       }
     },
-    "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj": {
+    "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj",
+        "projectUniqueName": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj",
         "projectName": "Passenger.Application",
-        "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj",
+        "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj",
         "packagesPath": "C:\\Users\\Alphicho\\.nuget\\packages\\",
-        "outputPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\obj\\",
+        "outputPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alphicho\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -527,8 +531,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj": {
-                "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj"
+              "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj": {
+                "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj"
               }
             }
           }
@@ -852,14 +856,14 @@
         }
       }
     },
-    "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj": {
+    "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj",
+        "projectUniqueName": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj",
         "projectName": "Passenger.Domain",
-        "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj",
+        "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj",
         "packagesPath": "C:\\Users\\Alphicho\\.nuget\\packages\\",
-        "outputPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\obj\\",
+        "outputPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alphicho\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1185,14 +1189,14 @@
         }
       }
     },
-    "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj": {
+    "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj",
+        "projectUniqueName": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj",
         "projectName": "Passenger.Infrastructure",
-        "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj",
+        "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\Passenger.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Alphicho\\.nuget\\packages\\",
-        "outputPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\obj\\",
+        "outputPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alphicho\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1207,11 +1211,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj": {
-                "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj"
+              "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj": {
+                "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Application\\Passenger.Application.csproj"
               },
-              "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj": {
-                "projectPath": "D:\\EAD_Bus_Ticketing_System\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj"
+              "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj": {
+                "projectPath": "D:\\EAD_BUS\\enterprise-application-bus-ticketing-system\\src\\Passenger\\Passenger.Domain\\Passenger.Domain.csproj"
               }
             }
           }
@@ -1234,23 +1238,23 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.8, )"
+              "version": "[10.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.8, )"
+              "version": "[10.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[8.0.8, )"
+              "version": "[10.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.8, )"
+              "version": "[10.0.0, )"
             },
             "Microsoft.Extensions.Configuration.Binder": {
               "target": "Package",
@@ -1262,7 +1266,7 @@
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[8.0.8, )"
+              "version": "[10.0.0, )"
             },
             "Quartz": {
               "target": "Package",
