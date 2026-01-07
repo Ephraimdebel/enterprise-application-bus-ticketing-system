@@ -7,6 +7,8 @@ using Payment.Application.Queries.GetPaymentById;
 using Payment.Infrastructure;
 using Payment.Application.DTOs;
 using Microsoft.AspNetCore.Http;
+using RabbitMQ.Client;
+using Payment.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,23 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IConnection>(sp =>
+{
+    var config = builder.Configuration.GetSection("RabbitMQ");
+
+    var factory = new ConnectionFactory
+    {
+        HostName = config["Host"],
+        Port = config.GetValue<int>("Port", 5672),
+        UserName = config["User"],
+        Password = config["Password"]
+    };
+
+    return factory.CreateConnection();
+});
+
+builder.Services.AddSingleton<RabbitMQPublisher>();
+
 var app = builder.Build();
 
 // Enable Swagger middleware
@@ -34,6 +53,8 @@ if (app.Environment.IsDevelopment() || true) // for demo always true
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
 //  Swagger UI
 app.UseSwagger();
 app.UseSwaggerUI();
