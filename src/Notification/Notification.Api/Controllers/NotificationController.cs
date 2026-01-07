@@ -1,32 +1,46 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Notification.Application.Commands;
+using Notification.Domain;
 
-namespace Notification.Api.Controllers
+namespace Notification.Api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class NotificationsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class NotificationsController : ControllerBase
+    private readonly IMediator _mediator;
+    private readonly INotificationRepository _repository;
+
+    public NotificationsController(IMediator mediator, INotificationRepository repository)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+        _repository = repository;
+    }
 
-        public NotificationsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+    // Keep your existing POST endpoint
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateNotificationCommand command)
+    {
+        var id = await _mediator.Send(command);
+        return Ok(new { NotificationId = id });
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateNotificationCommand command)
-        {
-            var id = await _mediator.Send(command);
-            return Ok(new { NotificationId = id });
-        }
+    // New: GET all notifications
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var notifications = await _repository.GetAllAsync();
+        return Ok(notifications);
+    }
 
-        [HttpGet("{userId}")]
-        public IActionResult GetForUser(Guid userId)
-        {
-            // To implement: fetch notifications from DB
-            return Ok(); 
-        }
+    // Optional: GET notifications for a specific user
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetForUser(Guid userId)
+    {
+        var notifications = (await _repository.GetAllAsync())
+                            .Where(n => n.UserId == userId) // Assuming NotificationEntity has UserId
+                            .ToList();
+        return Ok(notifications);
     }
 }

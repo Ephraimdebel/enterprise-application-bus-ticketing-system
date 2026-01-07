@@ -25,7 +25,6 @@ builder.Services.AddDbContext<NotificationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("NotificationDb")));
 
 
-
 builder.Services.AddSingleton<IConnection>(static sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
