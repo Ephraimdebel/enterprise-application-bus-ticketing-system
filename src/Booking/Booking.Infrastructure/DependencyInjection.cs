@@ -54,6 +54,8 @@ public static class DependencyInjection
 
         services.AddQuartzHostedService();
 
+        services.AddHostedService<Messaging.PaymentCompletedConsumer>();
+
         return services;
     }
 }

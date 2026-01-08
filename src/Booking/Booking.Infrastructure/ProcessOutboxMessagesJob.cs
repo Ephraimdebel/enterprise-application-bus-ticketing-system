@@ -53,7 +53,19 @@ internal sealed class ProcessOutboxMessagesJob : IJob
 
                 await _publisher.Publish(domainEvent, context.CancellationToken);
 
-                await _messagingService.PublishAsync(domainEvent, context.CancellationToken);
+                if (domainEvent is BookingConfirmedForPaymentEvent confirmedForPayment)
+                {
+                    // Special routing for Payment Module
+                    await _messagingService.PublishIntegrationEventAsync(
+                        confirmedForPayment, 
+                        "booking.exchange", 
+                        "booking.confirmed", 
+                        context.CancellationToken);
+                }
+                else
+                {
+                    await _messagingService.PublishAsync(domainEvent, context.CancellationToken);
+                }
 
                 message.ProcessedOnUtc = DateTime.UtcNow;
             }
