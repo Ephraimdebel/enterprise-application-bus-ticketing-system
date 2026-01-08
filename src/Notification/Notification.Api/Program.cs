@@ -43,6 +43,8 @@ builder.Services.AddSingleton<IConnection>(static sp =>
 });
 
 builder.Services.AddHostedService<PaymentCompletedConsumer>();
+builder.Services.AddHostedService<BookingConfirmedConsumer>();
+
 
 var app = builder.Build();
 

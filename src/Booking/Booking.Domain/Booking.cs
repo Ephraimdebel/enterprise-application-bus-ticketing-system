@@ -1,4 +1,6 @@
 
+using Booking.Domain.Events;
+
 namespace Booking.Domain;
 
 public sealed class Booking : Entity
@@ -57,6 +59,8 @@ public sealed class Booking : Entity
         ConfirmedOnUtc = utcNow;
 
         RaiseDomainEvent(new BookingConfirmedDomainEvent(Id,TotalPrice.Amount));
+        // NEW: Notification Event
+        RaiseDomainEvent(new BookingConfirmedForNotificationEvent(Id, PassengerId));
     }
 
     public void Cancel(DateTime utcNow)
