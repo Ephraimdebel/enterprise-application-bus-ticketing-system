@@ -26,4 +26,22 @@ internal sealed class PassengerService : IPassengerService
             return false;
         }
     }
+
+    public async Task<PassengerResponse?> GetByIdAsync(Guid passengerId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"/passengers/{passengerId}", cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return await response.Content.ReadFromJsonAsync<PassengerResponse>(cancellationToken: cancellationToken);
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }
