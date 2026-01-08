@@ -6,5 +6,7 @@ namespace Notification.Domain
     public interface INotificationRepository
     {
         Task AddAsync(NotificationEntity notification);
+
+        Task<List<NotificationEntity>> GetAllAsync();
     }
 }

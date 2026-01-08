@@ -51,19 +51,27 @@
 // }
 
 // Notification.Infrastructure/Messaging/PaymentCompletedConsumer.cs
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Notification.Domain;
+using Notification.Domain.Entities;
+using Notification.Infrastructure;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
 
+namespace Notification.Infrastructure.Messaging;
+
 public class PaymentCompletedConsumer : BackgroundService
 {
     private readonly IConnection _connection;
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public PaymentCompletedConsumer(IConnection connection)
+    public PaymentCompletedConsumer(IConnection connection, IServiceScopeFactory scopeFactory)
     {
         _connection = connection;
+        _scopeFactory = scopeFactory;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -74,13 +82,39 @@ public class PaymentCompletedConsumer : BackgroundService
         channel.QueueBind("payment.completed.queue", "payment.exchange", "payment.completed");
 
         var consumer = new EventingBasicConsumer(channel);
-        consumer.Received += (model, ea) =>
+        consumer.Received += async (model, ea) =>
+{
+    var body = ea.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+    Console.WriteLine($"[Notification] Received PaymentCompletedEvent: {message}");
+
+    try
+    {
+        var payment = JsonSerializer.Deserialize<PaymentCompletedEvent>(message);
+
+        if (payment != null)
         {
-            var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
-            Console.WriteLine($"[Notification] Received PaymentCompletedEvent: {message}");
-            // Here you can save to DB or send email, etc.
-        };
+            using var scope = _scopeFactory.CreateScope();
+            var repo = scope.ServiceProvider.GetRequiredService<INotificationRepository>();
+
+            var notification = new NotificationEntity
+            {
+                Id = Guid.NewGuid(),
+                UserId = payment.BookingId,      // TEMP — replace with real user later
+                Message = $"Payment of {payment.Amount} {payment.Currency} completed successfully.",
+                CreatedAt = DateTime.UtcNow,
+                IsRead = false
+            };
+
+            await repo.AddAsync(notification);
+            Console.WriteLine("[Notification] Saved successfully.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[Notification] Error saving notification: {ex.Message}");
+    }
+};
 
         channel.BasicConsume(queue: "payment.completed.queue", autoAck: true, consumer: consumer);
 
