@@ -5,6 +5,7 @@ using Booking.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Booking.Domain.Events;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -62,6 +63,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+// builder.Services.AddMediatR(typeof(BookingDomainEventHandler).Assembly);
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblyContaining<CreateBookingCommand>();
+});
+
+
 
 var app = builder.Build();
 

@@ -30,4 +30,6 @@ public sealed class OutboxService : IOutboxService
         await _dbContext.OutboxMessages.AddAsync(outboxMessage, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    
 }
