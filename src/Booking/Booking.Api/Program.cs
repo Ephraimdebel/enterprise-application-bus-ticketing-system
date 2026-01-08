@@ -100,29 +100,45 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+var requireAuth = builder.Configuration.GetValue<bool>("Keycloak:RequireAuth", true);
+
 app.MapPost("/bookings", async (CreateBookingCommand command, ISender sender) =>
 {
     var bookingId = await sender.Send(command);
     return Results.CreatedAtRoute("GetBooking", new { id = bookingId }, bookingId);
-}).RequireAuthorization();
+}).ApplyAuthorization(requireAuth);
 
 app.MapGet("/bookings/{id}", async (Guid id, ISender sender) =>
 {
     var query = new GetBookingQuery(id);
     var response = await sender.Send(query);
     return Results.Ok(response);
-}).WithName("GetBooking").RequireAuthorization();
+}).WithName("GetBooking").ApplyAuthorization(requireAuth);
 
 app.MapPut("/bookings/{id}/confirm", async (Guid id, ISender sender) =>
 {
     await sender.Send(new ConfirmBookingCommand(id));
     return Results.NoContent();
-}).RequireAuthorization();
+}).ApplyAuthorization(requireAuth);
 
 app.MapPut("/bookings/{id}/cancel", async (Guid id, ISender sender) =>
 {
     await sender.Send(new CancelBookingCommand(id));
     return Results.NoContent();
-}).RequireAuthorization();
+}).ApplyAuthorization(requireAuth);
 
 app.Run();
+
+// Helper extension to conditionally require auth
+public static class AuthExtensions
+{
+    public static TBuilder ApplyAuthorization<TBuilder>(this TBuilder builder, bool requireAuth) 
+        where TBuilder : IEndpointConventionBuilder
+    {
+        if (requireAuth)
+        {
+            builder.RequireAuthorization();
+        }
+        return builder;
+    }
+}
