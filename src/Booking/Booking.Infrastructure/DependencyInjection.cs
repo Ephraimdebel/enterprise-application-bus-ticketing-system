@@ -4,6 +4,7 @@ using global::Booking.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
+using Booking.Application.Interfaces;
 
 namespace Booking.Infrastructure;
 
@@ -22,6 +23,9 @@ public static class DependencyInjection
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BookingDbContext>());
         services.AddScoped<MessagingService>();
+
+        // --- Outbox Service ---
+        services.AddScoped<IOutboxService, OutboxService>();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
