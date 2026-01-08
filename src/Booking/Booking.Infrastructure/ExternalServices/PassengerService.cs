@@ -16,10 +16,9 @@ internal sealed class PassengerService : IPassengerService
     {
         try
         {
-            // The Passenger API might have a different route, 
-            // but based on naming conventions in Program.cs (app.MapPassengerEndpoints())
-            // and the GetPassengerByIdQuery, it's likely /api/passengers/{id}
-            var response = await _httpClient.GetAsync($"/api/passengers/{passengerId}", cancellationToken);
+            // Note: The Passenger API endpoints require authorization. 
+            // Internal module communication may require a service-to-service token.
+            var response = await _httpClient.GetAsync($"/passengers/{passengerId}", cancellationToken);
             return response.IsSuccessStatusCode;
         }
         catch

@@ -16,7 +16,8 @@ internal sealed class TripService : ITripService
     {
         try
         {
-            var response = await _httpClient.GetAsync($"/api/trips/{tripId}", cancellationToken);
+            // Note: In a production environment with Keycloak, you would need to attach a Bearer token here
+            var response = await _httpClient.GetAsync($"/trips/{tripId}", cancellationToken);
             return response.IsSuccessStatusCode;
         }
         catch
