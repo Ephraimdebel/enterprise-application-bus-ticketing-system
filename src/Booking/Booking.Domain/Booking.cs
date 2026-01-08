@@ -56,7 +56,7 @@ public sealed class Booking : Entity
         Status = BookingStatus.Confirmed;
         ConfirmedOnUtc = utcNow;
 
-        RaiseDomainEvent(new BookingConfirmedDomainEvent(Id));
+        RaiseDomainEvent(new BookingConfirmedDomainEvent(Id,TotalPrice.Amount));
     }
 
     public void Cancel(DateTime utcNow)
