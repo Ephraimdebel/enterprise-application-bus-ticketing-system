@@ -1,21 +1,38 @@
-
 using global::Booking.Domain;
+using Booking.Application.Interfaces;
+
 namespace Booking.Application;
 
 internal sealed class CreateBookingCommandHandler : ICommandHandler<CreateBookingCommand>
 {
     private readonly IBookingRepository _bookingRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ITripService _tripService;
+    private readonly IPassengerService _passengerService;
 
-    public CreateBookingCommandHandler(IBookingRepository bookingRepository, IUnitOfWork unitOfWork)
+    public CreateBookingCommandHandler(
+        IBookingRepository bookingRepository, 
+        IUnitOfWork unitOfWork,
+        ITripService tripService,
+        IPassengerService passengerService)
     {
         _bookingRepository = bookingRepository;
         _unitOfWork = unitOfWork;
+        _tripService = tripService;
+        _passengerService = passengerService;
     }
 
     public async Task<Guid> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
-        // In a real scenario, we would check if the passenger and trip exist via domain services or external providers
+        if (!await _tripService.ExistsAsync(request.TripId, cancellationToken))
+        {
+            throw new InvalidOperationException("Trip does not exist.");
+        }
+
+        if (!await _passengerService.ExistsAsync(request.PassengerId, cancellationToken))
+        {
+            throw new InvalidOperationException("Passenger does not exist.");
+        }
         
         var travelDate = new TravelDate(request.TravelDate);
         var totalPrice = new Money(request.TotalAmount, request.Currency);
