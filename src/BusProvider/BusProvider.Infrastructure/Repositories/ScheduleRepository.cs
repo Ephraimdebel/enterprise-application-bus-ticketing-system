@@ -1,5 +1,5 @@
 using BusProvider.Domain.Aggregates;
-using BusProvider.Domain.Repositories;
+using BusProvider.Domain.Interfaces;
 using BusProvider.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 

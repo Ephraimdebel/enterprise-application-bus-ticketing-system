@@ -1,4 +1,4 @@
-using BusProvider.Domain.Repositories;
+using BusProvider.Domain.Interfaces;
 using BusProvider.Infrastructure.Persistence;
 using BusProvider.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;

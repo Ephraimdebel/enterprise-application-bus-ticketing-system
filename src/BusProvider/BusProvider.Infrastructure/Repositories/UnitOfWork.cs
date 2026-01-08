@@ -1,4 +1,4 @@
-using BusProvider.Domain.Repositories;
+using BusProvider.Domain.Interfaces;
 using BusProvider.Infrastructure.Persistence;
 
 namespace BusProvider.Infrastructure.Repositories;
