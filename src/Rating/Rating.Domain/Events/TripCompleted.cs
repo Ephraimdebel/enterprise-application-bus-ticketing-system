@@ -1,14 +1,20 @@
-namespace Rating.Domain.ValueObjects
-{
-    public readonly struct Score
-    {
-        public int Value { get; }
+namespace Rating.Domain.Events;
 
-        public Score(int value)
-        {
-            if (value < 1 || value > 5)
-                throw new ArgumentOutOfRangeException(nameof(value), "Score must be between 1 and 5");
-            Value = value;
-        }
+public sealed class TripCompleted
+{
+    public Guid TripId { get; }
+    public Guid UserId { get; }
+
+    public TripCompleted(Guid tripId, Guid userId)
+    {
+        if (tripId == Guid.Empty)
+            throw new InvalidOperationException("TripId cannot be empty.");
+
+        if (userId == Guid.Empty)
+            throw new InvalidOperationException("UserId cannot be empty.");
+
+        TripId = tripId;
+        UserId = userId;
     }
 }
+
