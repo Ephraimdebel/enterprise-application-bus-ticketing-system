@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Payment.Application.Interfaces;
 using Payment.Domain.Repositories;
+using Payment.Infrastructure.Messaging;
 using Payment.Infrastructure.Persistence;
 using Payment.Infrastructure.Repositories;
 
@@ -16,7 +18,7 @@ namespace Payment.Infrastructure
                 options.UseNpgsql(connectionString));
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
-
+            services.AddSingleton<IEventPublisher, RabbitMQPublisher>();
             return services;
         }
     }
