@@ -1,41 +1,51 @@
+using Passenger.Api.Endpoints;
+using MediatR;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// ----------------------
+// Add services
+// ----------------------
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
+// Add MediatR
+builder.Services.AddMediatR(typeof(Program).Assembly);
+
+
+// Add Authentication & Authorization
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        // TODO: Replace with your real auth server URL
+        options.Authority = "https://your-auth-server";
+        options.TokenValidationParameters.ValidateAudience = false;
+    });
+
+// ----------------------
+// Build the app
+// ----------------------
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ----------------------
+// Middleware
+// ----------------------
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// ----------------------
+// Map endpoints
+// ----------------------
+app.MapPassengerEndpoints();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
+// ----------------------
+// Run the app
+// ----------------------
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

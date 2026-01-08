@@ -1,6 +1,35 @@
-@Passenger.Api_HostAddress = http://localhost:5285
+@host = https://localhost:5001
 
-GET {{Passenger.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Register passenger (requires Bearer token from Keycloak)
+POST {{host}}/passengers
+Authorization: Bearer {{token}}
+Content-Type: application/json; charset=utf-8
 
-###
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "countryCode": "+251",
+  "phoneNumber": "911223344"
+}
+
+### Get passenger
+GET {{host}}/passengers/{{passengerId}}
+Authorization: Bearer {{token}}
+
+### Update passenger
+PUT {{host}}/passengers/{{passengerId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json; charset=utf-8
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.updated@example.com",
+  "countryCode": "+251",
+  "phoneNumber": "911223344"
+}
+
+### Soft delete passenger
+DELETE {{host}}/passengers/{{passengerId}}
+Authorization: Bearer {{token}}
