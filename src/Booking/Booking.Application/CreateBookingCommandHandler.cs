@@ -3,7 +3,7 @@ using Booking.Application.Interfaces;
 
 namespace Booking.Application;
 
-internal sealed class CreateBookingCommandHandler : ICommandHandler<CreateBookingCommand>
+public sealed class CreateBookingCommandHandler : ICommandHandler<CreateBookingCommand>
 {
     private readonly IBookingRepository _bookingRepository;
     private readonly IUnitOfWork _unitOfWork;
