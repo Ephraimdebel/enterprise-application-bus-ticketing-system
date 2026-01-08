@@ -67,6 +67,10 @@ internal sealed class EventSubscriberService : BackgroundService
                 {
                     await HandlePaymentFailedAsync(message, stoppingToken);
                 }
+                else if (message.Contains("BookingFailedDomainEvent"))
+                {
+                    await HandleBookingFailedAsync(message, stoppingToken);
+                }
             }
             catch (Exception ex)
             {
@@ -85,6 +89,37 @@ internal sealed class EventSubscriberService : BackgroundService
         _logger.LogInformation("EventSubscriberService started listening to booking_events");
 
         await Task.Delay(Timeout.Infinite, stoppingToken);
+    }
+
+    private async Task HandleBookingFailedAsync(string message, CancellationToken ct)
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var sender = scope.ServiceProvider.GetRequiredService<MediatR.ISender>();
+
+        _logger.LogInformation("Processing Booking Failure in Dispute Module...");
+
+        try
+        {
+            var data = JsonConvert.DeserializeObject<dynamic>(message);
+            if (data == null) return;
+
+            Guid bookingId = data.BookingId;
+            Guid passengerId = data.PassengerId;
+
+            var command = new OpenDisputeCommand(
+                bookingId,
+                passengerId,
+                "AUTO_FAIL",
+                "Automatic dispute for failed booking.",
+                "System: Booking failed. Opening dispute for investigation.");
+
+            await sender.Send(command, ct);
+            _logger.LogInformation("Automatically opened dispute for Booking: {BookingId}", bookingId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to automatically open dispute");
+        }
     }
 
     private async Task HandleBookingCancelledAsync(string message, CancellationToken ct)

@@ -71,4 +71,16 @@ public sealed class Booking : Entity
 
         RaiseDomainEvent(new BookingCancelledDomainEvent(Id));
     }
+
+    public void Fail(DateTime utcNow)
+    {
+        if (Status != BookingStatus.Reserved)
+        {
+            throw new InvalidOperationException("Only reserved bookings can fail.");
+        }
+
+        Status = BookingStatus.Failed;
+        
+        RaiseDomainEvent(new BookingFailedDomainEvent(Id, PassengerId));
+    }
 }
