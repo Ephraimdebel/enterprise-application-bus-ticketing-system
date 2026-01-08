@@ -1,6 +1,4 @@
-
 services:
-
   postgres:
     image: postgres:15-alpine
     container_name: bus_system_postgres
