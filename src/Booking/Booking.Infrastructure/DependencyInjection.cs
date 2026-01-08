@@ -29,6 +29,17 @@ public static class DependencyInjection
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
+        // --- External Services ---
+        services.AddHttpClient<ITripService, ExternalServices.TripService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ExternalServices:TripApiUrl"] ?? "http://localhost:5233");
+        });
+
+        services.AddHttpClient<IPassengerService, ExternalServices.PassengerService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ExternalServices:PassengerApiUrl"] ?? "http://localhost:5285");
+        });
+
         services.AddQuartz(configure =>
         {
             var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
