@@ -10,7 +10,5 @@ public sealed class CreateTripRequest
 
     public DateOnly ArrivalDate { get; init; }
     public TimeOnly ArrivalTime { get; init; }
-
-    public int SeatCapacity { get; init; }
     public decimal Price { get; init; }
 }

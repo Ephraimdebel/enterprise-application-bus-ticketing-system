@@ -8,23 +8,31 @@ public sealed class CreateTripCommandHandler
     : IRequestHandler<CreateTripCommand, Unit>
 {
     private readonly ITripRepository _tripRepository;
+    private readonly IBusProviderGateway _busProviderGateway;
 
-    public CreateTripCommandHandler(ITripRepository tripRepository)
+    public CreateTripCommandHandler(ITripRepository tripRepository, IBusProviderGateway busProviderGateway)
     {
         _tripRepository = tripRepository;
+        _busProviderGateway = busProviderGateway;
     }
 
     public async Task<Unit> Handle(
         CreateTripCommand request,
         CancellationToken cancellationToken)
     {
+        var bus = await _busProviderGateway.GetBusAsync(request.BusId, cancellationToken);
+        if (bus is null)
+        {
+            throw new InvalidOperationException("Bus not found for trip creation.");
+        }
+
         var trip = new TripAggregates(
             request.TripId,
             request.DepartureTime,
             request.ArrivalTime,
             request.BusId,
             request.RouteId,
-            request.SeatCapacity, // placeholder
+            bus.SeatCapacity,
             request.Price 
         );
 
