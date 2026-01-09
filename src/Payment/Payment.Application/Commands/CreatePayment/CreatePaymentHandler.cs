@@ -33,26 +33,11 @@ public class CreatePaymentHandler : IRequestHandler<CreatePaymentCommand, Paymen
 
         // 3️⃣ Save to DB
         await _repository.AddAsync(payment);
-        await _repository.SaveChangesAsync();
-
-        // similate 
         
+        // 4️⃣ Simulate success
         payment.MarkAsSuccess(); 
 
-        // 4️⃣ Publish event if payment is completed
-        if (payment.Status.ToString() == "Confirmed") // or payment.Status == PaymentStatus.Completed if enum
-        {
-            var evt = new PaymentCompletedEvent
-            {
-                PaymentId = payment.Id,
-                BookingId = payment.BookingId,
-                Amount = payment.Amount.Amount,
-                Currency = payment.Amount.Currency,
-                Status = payment.Status.ToString()
-            };
-
-            _publisher.Publish(evt, "payment.exchange", "payment.completed");
-        }
+        await _repository.SaveChangesAsync();
 
         // 5️⃣ Return DTO
         return new PaymentDto

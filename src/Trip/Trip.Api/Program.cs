@@ -7,6 +7,10 @@ using Trip.Infrastructure.Clients;
 using Trip.Infrastructure.Persistence;
 using Trip.Infrastructure.Repositories;
 using Trip.Infrastructure.Serialization;
+using Trip.Infrastructure.Outbox;
+using Quartz;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +23,23 @@ builder.Services.AddSwaggerGen();
 
 // MediatR
 builder.Services.AddMediatR(typeof(CreateTripCommand).Assembly);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Keycloak:Authority"];
+        options.Audience = builder.Configuration["Keycloak:Audience"];
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 // Database
 builder.Services.AddDbContext<TripDbContext>(options =>
@@ -37,6 +58,19 @@ builder.Services.AddHttpClient<IBusProviderGateway, BusProviderClient>(client =>
     client.BaseAddress = new Uri(busProviderBaseUrl);
     client.Timeout = TimeSpan.FromSeconds(10);
 });
+
+// Quartz for Outbox
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
+    q.AddJob<ProcessOutboxMessagesJob>(opts => opts.WithIdentity(jobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("ProcessOutboxMessagesJob-trigger")
+        .WithSimpleSchedule(x => x.WithIntervalInSeconds(5).RepeatForever()));
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 // Ensure DateOnly/TimeOnly serialize consistently for Trip API responses
 builder.Services.Configure<JsonOptions>(options =>
@@ -64,6 +98,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

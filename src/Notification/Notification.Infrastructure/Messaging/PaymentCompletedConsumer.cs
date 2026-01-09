@@ -77,7 +77,7 @@ public class PaymentCompletedConsumer : BackgroundService
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var channel = _connection.CreateModel();
-        channel.ExchangeDeclare("payment.exchange", ExchangeType.Direct);
+        channel.ExchangeDeclare("payment.exchange", ExchangeType.Direct, durable: true);
         channel.QueueDeclare("payment.completed.queue", durable: true, exclusive: false, autoDelete: false);
         channel.QueueBind("payment.completed.queue", "payment.exchange", "payment.completed");
 

@@ -60,8 +60,6 @@ public class TripConfiguration : IEntityTypeConfiguration<TripAggregate>
               .IsRequired();
                  });
 
-
-              builder.Ignore(t => t.DomainEvents);
-       }
+        }
 }
 
