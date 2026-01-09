@@ -21,7 +21,9 @@ public class Trip
     public Guid RouteId { get; private set; }
 
     public IReadOnlyCollection<Seat> Seats => _seats.AsReadOnly();
-    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    
+    public IReadOnlyList<IDomainEvent> GetDomainEvents() => _domainEvents.ToList();
+    public void ClearDomainEvents() => _domainEvents.Clear();
 
     private Trip() { }
 
@@ -107,6 +109,15 @@ public class Trip
         Price = newPrice;
 
         _domainEvents.Add(new TripScheduleUpdated(TripId, newDepartureTime, newArrivalTime));
+    }
+
+    public void Complete()
+    {
+        if (Status != TripStatus.Scheduled)
+            throw new InvalidOperationException("Only scheduled trips can be completed.");
+
+        Status = TripStatus.Completed;
+        _domainEvents.Add(new TripCompleted(TripId));
     }
 }
 

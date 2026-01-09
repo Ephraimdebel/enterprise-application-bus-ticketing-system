@@ -4,6 +4,8 @@ using Passenger.Infrastructure;
 using Passenger.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,14 +25,22 @@ builder.Services.AddPassengerInfrastructure(builder.Configuration);
 
 
 // Add Authentication & Authorization
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        // TODO: Replace with your real auth server URL
-        options.Authority = "https://your-auth-server";
-        options.TokenValidationParameters.ValidateAudience = false;
+        options.Authority = builder.Configuration["Keycloak:Authority"];
+        options.Audience = builder.Configuration["Keycloak:Audience"];
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
     });
+
+builder.Services.AddAuthorization();
 
 // ----------------------
 // Build the app

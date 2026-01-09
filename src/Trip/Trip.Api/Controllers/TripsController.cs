@@ -7,6 +7,7 @@ using Trip.Application.Commands.ReserveSeat;
 using Trip.Application.Commands.ReleaseSeat;
 using Trip.Application.Queries.GetTripById;
 using Trip.Application.Queries.GetTripSeats;
+using Trip.Application.Commands.CompleteTrip;
 using Trip.Domain.ValueObjects;
 
 namespace Trip.Api.Controllers;
@@ -69,13 +70,27 @@ public sealed class TripsController : ControllerBase
         return NoContent();
     }
 
-    // DELETE /trips/{id}
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> CancelTrip(Guid id)
     {
         try
         {
             await _mediator.Send(new CancelTripCommand(id));
+            return NoContent();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    // POST /trips/{id}/complete
+    [HttpPost("{id:guid}/complete")]
+    public async Task<IActionResult> CompleteTrip(Guid id)
+    {
+        try
+        {
+            await _mediator.Send(new CompleteTripCommand(id));
             return NoContent();
         }
         catch (InvalidOperationException ex)
