@@ -9,6 +9,9 @@ using Payment.Application.DTOs;
 using Microsoft.AspNetCore.Http;
 using RabbitMQ.Client;
 using Payment.Infrastructure.Messaging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,23 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining<CreatePaymentCommand>();
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Keycloak:Authority"];
+        options.Audience = builder.Configuration["Keycloak:Audience"];
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 //  Add Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -47,6 +67,13 @@ builder.Services.AddSingleton<RabbitMQPublisher>();
 
 var app = builder.Build();
 
+// Automatically create database and run migrations
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<Payment.Infrastructure.Persistence.PaymentDbContext>();
+    context.Database.Migrate();
+}
+
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment() || true) // for demo always true
 {
@@ -58,6 +85,9 @@ if (app.Environment.IsDevelopment() || true) // for demo always true
 //  Swagger UI
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 //  Minimal API Endpoints
 

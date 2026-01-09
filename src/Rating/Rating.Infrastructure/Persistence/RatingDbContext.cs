@@ -13,6 +13,7 @@ public sealed class RatingDbContext : DbContext
     }
 
     public DbSet<RatingEntity> Ratings => Set<RatingEntity>();
+    public DbSet<Rating.Application.OutboxMessage> OutboxMessages => Set<Rating.Application.OutboxMessage>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,6 +42,14 @@ public sealed class RatingDbContext : DbContext
             builder.Property(r => r.CreatedAt)
                    .IsRequired();
         });
+
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(RatingDbContext).Assembly);
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        // Note: Currently Rating aggregate doesn't have domain events, but we implement this for compliance.
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }
 

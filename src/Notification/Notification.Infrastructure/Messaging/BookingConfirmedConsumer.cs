@@ -26,7 +26,7 @@ public class BookingConfirmedConsumer : BackgroundService
     {
         var channel = _connection.CreateModel();
 
-        channel.ExchangeDeclare("booking.exchange", ExchangeType.Direct);
+        channel.ExchangeDeclare("booking.exchange", ExchangeType.Direct, durable: true);
         channel.QueueDeclare(
             queue: "booking.confirmed.queue",
             durable: true,

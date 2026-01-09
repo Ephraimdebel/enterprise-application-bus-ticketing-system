@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using Payment.Application.Interfaces;
 using Payment.Domain.Repositories;
 using Payment.Infrastructure.Messaging;
@@ -20,7 +21,20 @@ namespace Payment.Infrastructure
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddSingleton<IEventPublisher, RabbitMQPublisher>();
             // services.AddSingleton<BookingConfirmedForPaymentConsumer>();
-services.AddHostedService<BookingConfirmedConsumer>();
+            services.AddHostedService<BookingConfirmedConsumer>();
+
+            // Quartz for Outbox
+            services.AddQuartz(q =>
+            {
+                var jobKey = new global::Quartz.JobKey(nameof(Outbox.ProcessOutboxMessagesJob));
+                q.AddJob<Outbox.ProcessOutboxMessagesJob>(opts => opts.WithIdentity(jobKey));
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey)
+                    .WithIdentity("Payment-Outbox-Trigger")
+                    .WithSimpleSchedule(x => x.WithIntervalInSeconds(5).RepeatForever()));
+            });
+
+            services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
             return services;
         }
