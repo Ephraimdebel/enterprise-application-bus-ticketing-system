@@ -26,8 +26,9 @@ public sealed class TripsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTrip([FromBody] CreateTripRequest request)
     {
+        var tripId = Guid.NewGuid();
         var command = new CreateTripCommand(
-            Guid.NewGuid(),
+            tripId,
             request.BusId,
             request.RouteId,
             new TravelDateTime(request.DepartureDate, request.DepartureTime),
@@ -39,8 +40,8 @@ public sealed class TripsController : ControllerBase
 
         return CreatedAtAction(
             nameof(GetTripById),
-            new { id = command.TripId },
-            null
+            new { id = tripId },
+            new { id = tripId }
         );
     }
 
