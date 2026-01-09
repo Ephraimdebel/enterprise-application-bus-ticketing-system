@@ -1,4 +1,8 @@
 using Passenger.Api.Endpoints;
+using Passenger.Application;
+using Passenger.Infrastructure;
+using Passenger.Infrastructure.Persistence.DbContext;
+using Microsoft.EntityFrameworkCore;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +13,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add MediatR
-builder.Services.AddMediatR(typeof(Program).Assembly);
+// Add Application Services (includes MediatR)
+builder.Services.AddPassengerApplication();
+
+// Add Infrastructure Services (Database, Repositories, etc.)
+builder.Services.AddPassengerInfrastructure(builder.Configuration);
+
+// Add Authentication & Authorization
 
 
 // Add Authentication & Authorization
@@ -27,6 +36,13 @@ builder.Services.AddAuthentication("Bearer")
 // Build the app
 // ----------------------
 var app = builder.Build();
+
+// Ensure database is created
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<PassengerDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+}
 
 // ----------------------
 // Middleware

@@ -29,6 +29,13 @@ builder.Services.AddScoped<ITripRepository, TripRepository>();
 
 var app = builder.Build();
 
+// Ensure database is created
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<TripDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+}
+
 // Middleware
 if (app.Environment.IsDevelopment())
 {
