@@ -48,11 +48,11 @@ builder.Services.Configure<JsonOptions>(options =>
 
 var app = builder.Build();
 
-// Ensure database exists and apply migrations on startup
+// Ensure database is created
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<TripDbContext>();
-    await db.Database.MigrateAsync();
+    var dbContext = scope.ServiceProvider.GetRequiredService<TripDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
 }
 
 // Middleware

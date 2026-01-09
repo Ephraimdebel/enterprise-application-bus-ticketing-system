@@ -4,6 +4,7 @@ using global::Booking.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
+using Booking.Application.Interfaces;
 
 namespace Booking.Infrastructure;
 
@@ -23,7 +24,21 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BookingDbContext>());
         services.AddScoped<MessagingService>();
 
+        // --- Outbox Service ---
+        services.AddScoped<IOutboxService, OutboxService>();
+
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        // --- External Services ---
+        services.AddHttpClient<ITripService, ExternalServices.TripService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ExternalServices:TripApiUrl"] ?? "http://localhost:5233");
+        });
+
+        services.AddHttpClient<IPassengerService, ExternalServices.PassengerService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["ExternalServices:PassengerApiUrl"] ?? "http://localhost:5285");
+        });
 
         services.AddQuartz(configure =>
         {
@@ -38,6 +53,8 @@ public static class DependencyInjection
         });
 
         services.AddQuartzHostedService();
+
+        services.AddHostedService<Messaging.PaymentCompletedConsumer>();
 
         return services;
     }

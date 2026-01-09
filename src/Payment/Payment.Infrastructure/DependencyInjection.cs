@@ -19,6 +19,9 @@ namespace Payment.Infrastructure
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddSingleton<IEventPublisher, RabbitMQPublisher>();
+            // services.AddSingleton<BookingConfirmedForPaymentConsumer>();
+services.AddHostedService<BookingConfirmedConsumer>();
+
             return services;
         }
     }

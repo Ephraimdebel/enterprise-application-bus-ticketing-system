@@ -1,4 +1,6 @@
 
+using Booking.Domain.Events;
+
 namespace Booking.Domain;
 
 public sealed class Booking : Entity
@@ -56,7 +58,9 @@ public sealed class Booking : Entity
         Status = BookingStatus.Confirmed;
         ConfirmedOnUtc = utcNow;
 
-        RaiseDomainEvent(new BookingConfirmedDomainEvent(Id));
+        RaiseDomainEvent(new BookingConfirmedDomainEvent(Id,TotalPrice.Amount));
+        // NEW: Notification Event
+        RaiseDomainEvent(new BookingConfirmedForNotificationEvent(Id, PassengerId));
     }
 
     public void Cancel(DateTime utcNow)
@@ -70,5 +74,27 @@ public sealed class Booking : Entity
         CancelledOnUtc = utcNow;
 
         RaiseDomainEvent(new BookingCancelledDomainEvent(Id));
+    }
+
+    public void Fail(DateTime utcNow)
+    {
+        if (Status != BookingStatus.Reserved)
+        {
+            throw new InvalidOperationException("Only reserved bookings can fail.");
+        }
+
+        Status = BookingStatus.Failed;
+        
+        RaiseDomainEvent(new BookingFailedDomainEvent(Id, PassengerId));
+    }
+
+    public void Complete(DateTime utcNow)
+    {
+        if (Status != BookingStatus.Confirmed)
+        {
+            throw new InvalidOperationException("Only confirmed bookings can be completed.");
+        }
+
+        Status = BookingStatus.Completed;
     }
 }

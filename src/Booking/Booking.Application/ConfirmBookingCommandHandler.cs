@@ -1,4 +1,5 @@
 
+using Booking.Domain.Events;
 using global::Booking.Domain;
 namespace Booking.Application;
 
@@ -28,7 +29,7 @@ internal sealed class ConfirmBookingCommandHandler : ICommandHandler<ConfirmBook
         }
 
         booking.Confirm(_dateTimeProvider.UtcNow);
-
+        booking.AddDomainEvent(new BookingConfirmedForNotificationEvent(booking.Id, booking.PassengerId));
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return booking.Id;
