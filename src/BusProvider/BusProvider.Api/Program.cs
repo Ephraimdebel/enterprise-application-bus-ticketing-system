@@ -1,8 +1,14 @@
 using BusProvider.Application;
-using BusProvider.Application.BusProviders;
-using BusProvider.Application.Buses;
-using BusProvider.Application.Routes;
-using BusProvider.Application.Schedules;
+using BusProvider.Application.Commands.BusProviders;
+using BusProvider.Application.Commands.Buses;
+using BusProvider.Application.Commands.Routes;
+using BusProvider.Application.Commands.Schedules;
+using BusProvider.Application.Queries.BusProviders;
+using BusProvider.Application.Queries.Buses;
+using BusProvider.Application.Queries.Routes;
+using BusProvider.Application.Queries.Schedules;
+using BusProvider.Application.DTOs;
+using BusProvider.Api.Middlewares;
 using BusProvider.Infrastructure;
 using MediatR;
 using Microsoft.OpenApi.Models;
@@ -23,6 +29,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 var app = builder.Build();
 
@@ -33,6 +40,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 var busProviders = app.MapGroup("/bus-providers").WithTags("Bus Providers");
 
@@ -163,12 +171,3 @@ schedules.MapDelete("/{id:guid}", async (Guid id, IMediator mediator, Cancellati
 });
 
 app.Run();
-
-public record RegisterBusProviderRequest(string Name, string Email, string PhoneNumber, string Address);
-public record UpdateBusProviderRequest(string Name, string Email, string PhoneNumber, string Address);
-public record CreateBusRequest(Guid ProviderId, string BusNumber, string BusType, int SeatCapacity);
-public record UpdateBusRequest(string BusNumber, string BusType, int SeatCapacity);
-public record CreateRouteRequest(Guid BusId, string Start, string End, double DistanceKm);
-public record UpdateRouteRequest(string Start, string End, double DistanceKm);
-public record CreateScheduleRequest(Guid BusId, Guid RouteId, DateOnly TripDate, TimeOnly Departure, TimeOnly Arrival, int SeatsAvailable);
-public record UpdateScheduleRequest(DateOnly TripDate, TimeOnly Departure, TimeOnly Arrival, int SeatsAvailable);

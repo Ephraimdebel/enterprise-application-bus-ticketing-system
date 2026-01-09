@@ -9,6 +9,5 @@ public sealed record CreateTripCommand(
     Guid RouteId,
     TravelDateTime DepartureTime,
     TravelDateTime ArrivalTime,
-    int SeatCapacity, // placeholder for now 
-    TripPrice Price 
+    TripPrice Price
 ) : IRequest;

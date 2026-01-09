@@ -32,7 +32,6 @@ public sealed class TripsController : ControllerBase
             request.RouteId,
             new TravelDateTime(request.DepartureDate, request.DepartureTime),
             new TravelDateTime(request.ArrivalDate, request.ArrivalTime),
-            request.SeatCapacity,
             new TripPrice(request.Price)
         );
 
