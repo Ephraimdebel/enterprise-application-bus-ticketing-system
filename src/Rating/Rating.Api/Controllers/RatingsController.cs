@@ -33,8 +33,12 @@ public sealed class RatingsController : ControllerBase
 
         try
         {
-            await _mediator.Send(command);
-            return Ok();
+            var ratingId = await _mediator.Send(command);
+            return CreatedAtAction(
+                nameof(GetRatingsByTrip),
+                new { tripId = request.TripId },
+                new { id = ratingId }
+            );
         }
         catch (Exception ex)
         {

@@ -40,7 +40,7 @@ public class CreatePaymentHandler : IRequestHandler<CreatePaymentCommand, Paymen
         payment.MarkAsSuccess(); 
 
         // 4️⃣ Publish event if payment is completed
-        if (payment.Status.ToString() == "Success") // or payment.Status == PaymentStatus.Completed if enum
+        if (payment.Status.ToString() == "Confirmed") // or payment.Status == PaymentStatus.Completed if enum
         {
             var evt = new PaymentCompletedEvent
             {
