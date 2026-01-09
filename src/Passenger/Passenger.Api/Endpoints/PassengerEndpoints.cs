@@ -18,8 +18,8 @@ public static class PassengerEndpoints
         group.MapPost("/", RegisterPassenger);
 
         // --- PROTECTED ROUTES ---
-        group.MapGet("/{id:guid}", GetPassengerById)
-             .RequireAuthorization();
+        group.MapGet("/{id:guid}", GetPassengerById);
+             //.RequireAuthorization();
 
         group.MapPut("/{id:guid}", UpdatePassenger)
              .RequireAuthorization();
@@ -56,7 +56,7 @@ public static class PassengerEndpoints
         HttpContext http,
         CancellationToken ct)
     {
-        EnforceSelfOrAdmin(http.User, PassengerId.FromGuid(id));
+        // EnforceSelfOrAdmin(http.User, PassengerId.FromGuid(id));
 
         var dto = await mediator.Send(new GetPassengerByIdQuery(PassengerId.FromGuid(id)), ct);
         return dto is null ? Results.NotFound() : Results.Ok(dto);
