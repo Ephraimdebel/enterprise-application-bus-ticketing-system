@@ -25,7 +25,7 @@ public class PaymentEntity
 
     public void MarkAsSuccess()
     {
-        Status = "Success";
+        Status = "Confirmed";
     }
 
     public void MarkAsFailed()
